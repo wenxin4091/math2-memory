@@ -1,0 +1,46 @@
+const fs = require("fs");
+const dir = __dirname;
+const read = (f) => fs.readFileSync(dir + "/" + f, "utf8");
+const wrap = (s) => s.replace(/<\/script/gi, "<\\/script");
+
+const html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#0e1116">
+  <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="数二十件套">
+  <meta name="description" content="考研数学二高频抓分：极限、导数、积分、多元微分、二重积分、微分方程、行列式矩阵、方程组、特征值二次型、中学锦囊">
+  <meta property="og:title" content="数二十件套">
+  <meta property="og:description" content="考研数学二 · 高频抓分记忆">
+  <meta itemprop="name" content="数二十件套">
+  <meta itemprop="description" content="考研数学二 · 高频抓分记忆">
+  <title>数二十件套</title>
+  <style>
+${read("vendor/katex.min.css")}
+${read("style.css")}
+  </style>
+  <script>
+    (function () {
+      var ua = navigator.userAgent || "";
+      if (/MicroMessenger/i.test(ua)) document.documentElement.classList.add("is-wechat");
+      if (/iPhone|iPad|iPod/i.test(ua)) document.documentElement.classList.add("is-ios");
+    })();
+  </script>
+</head>
+<body>
+  <div id="app"><p class="boot-msg">正在打开数二十件套…</p></div>
+  <script>${wrap(read("vendor/katex.min.js"))}</script>
+  <script>${wrap(read("data.js"))}</script>
+  <script>${wrap(read("app.js"))}</script>
+</body>
+</html>
+`;
+
+const out = dir + "/数二十件套.html";
+fs.writeFileSync(out, html);
+console.log("wrote", out, fs.statSync(out).size, "bytes");
