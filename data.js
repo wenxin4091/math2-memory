@@ -351,6 +351,53 @@ window.MATH2_DATA = {
             { tex: "\\dfrac{dy}{dx}=\\dfrac{y'(t)}{x'(t)}=\\dfrac{1-3t^{2}}{1-2t}" }
           ],
           answer: "\\dfrac{1-3t^{2}}{1-2t}"
+        },
+        {
+          id: "deriv-inv",
+          kind: "cloze",
+          freq: 3,
+          tier: 1,
+          title: "反函数求导",
+          hint: "互为反函数，导数互为倒数。",
+          reveal: [
+            { tex: "\\frac{dx}{dy}=\\frac{1}{dy/dx},\\quad (f^{-1})'(y)=\\frac{1}{f'(x)}", display: true }
+          ],
+          holes: ["\\dfrac{1}{dy/dx}", "\\dfrac{1}{f'(x)}"],
+          mask: [
+            "\\dfrac{dx}{dy}={{1}},\\quad (f^{-1})'(y)={{2}}"
+          ],
+          notes: [
+            "二阶了解即可：(f⁻¹)''(y) = −f''(x)/[f'(x)]³。"
+          ]
+        },
+        {
+          id: "deriv-higher",
+          kind: "cloze",
+          freq: 3,
+          tier: 3,
+          title: "高阶导数",
+          hint: "乘积用莱布尼茨；几个基本函数的 n 阶导直接背。",
+          reveal: [
+            { tex: "(uv)^{(n)}=\\sum_{k=0}^{n}\\binom{n}{k}u^{(k)}v^{(n-k)}", display: true },
+            { tex: "\\sin^{(n)}x=\\sin\\left(x+\\frac{n\\pi}{2}\\right),\\quad \\cos^{(n)}x=\\cos\\left(x+\\frac{n\\pi}{2}\\right)", display: true },
+            { tex: "\\left(\\frac1{ax+b}\\right)^{(n)}=\\frac{(-1)^n n!\\,a^n}{(ax+b)^{n+1}},\\quad [\\ln(1+x)]^{(n)}=\\frac{(-1)^{n-1}(n-1)!}{(1+x)^n}", display: true }
+          ],
+          holes: [
+            "\\sum_{k=0}^{n}\\binom{n}{k}u^{(k)}v^{(n-k)}",
+            "\\sin\\left(x+\\dfrac{n\\pi}{2}\\right)",
+            "\\dfrac{(-1)^n n!\\,a^n}{(ax+b)^{n+1}}",
+            "\\dfrac{(-1)^{n-1}(n-1)!}{(1+x)^n}"
+          ],
+          mask: [
+            "(uv)^{(n)}={{1}}",
+            "\\sin^{(n)}x={{2}}",
+            "\\left(\\dfrac1{ax+b}\\right)^{(n)}={{3}}",
+            "[\\ln(1+x)]^{(n)}={{4}}"
+          ],
+          notes: [
+            "e^x 的 n 阶导还是 e^x。",
+            "二项式系数 C(n,k) 见中学锦囊。"
+          ]
         }
       ]
     },
@@ -567,6 +614,68 @@ window.MATH2_DATA = {
             { tex: "=\\sin(x^{2})\\cdot 2x=2x\\sin(x^{2})" }
           ],
           answer: "2x\\sin(x^{2})"
+        },
+        {
+          id: "integ-newton",
+          kind: "cloze",
+          freq: 5,
+          tier: 1,
+          title: "牛顿-莱布尼茨公式",
+          hint: "定积分 = 原函数在上下限之差。",
+          reveal: [
+            { tex: "\\int_a^b f(x)\\,dx=F(b)-F(a),\\quad F'=f", display: true }
+          ],
+          holes: ["F(b)-F(a)"],
+          mask: [
+            "\\int_a^b f(x)\\,dx={{1}}"
+          ],
+          notes: [
+            "F 是 f 的任一原函数——这就是基本积分表要背熟的原因。"
+          ]
+        },
+        {
+          id: "integ-phys",
+          kind: "cloze",
+          freq: 3,
+          tier: 3,
+          title: "物理应用与形心",
+          hint: "微元法：先写一小段（一片）的贡献，再积分。",
+          reveal: [
+            { tex: "\\text{功：}W=\\int_a^b F(x)\\,dx,\\quad \\text{水压力：}P=\\int \\rho g h\\,dS", display: true },
+            { tex: "\\text{形心：}\\bar x=\\frac{\\iint_D x\\,d\\sigma}{\\iint_D d\\sigma},\\quad \\bar y=\\frac{\\iint_D y\\,d\\sigma}{\\iint_D d\\sigma}", display: true },
+            { tex: "\\text{旋转曲面侧面积（绕 }x\\text{ 轴）：}S=2\\pi\\int y\\,ds", display: true }
+          ],
+          holes: ["\\int_a^b F(x)\\,dx", "\\rho g h\\,dS", "\\dfrac{\\iint_D x\\,d\\sigma}{\\iint_D d\\sigma}", "2\\pi\\int y\\,ds"],
+          mask: [
+            "W={{1}},\\quad P=\\int{{2}}",
+            "\\bar x={{3}}",
+            "S={{4}}"
+          ],
+          notes: [
+            "侧面积里 ds 是弧长微元 √(1+y′²)dx。",
+            "质心把密度 ρ 乘进分子分母；均匀密度就是形心。"
+          ]
+        },
+        {
+          id: "integ-mvt",
+          kind: "cloze",
+          freq: 3,
+          tier: 3,
+          title: "积分中值定理与柯西不等式",
+          hint: "证明题工具：把积分变成某一点的函数值。",
+          reveal: [
+            { tex: "\\int_a^b f(x)\\,dx=f(\\xi)(b-a),\\quad \\xi\\in[a,b]", display: true },
+            { tex: "\\left(\\int_a^b fg\\right)^2\\le\\int_a^b f^2\\cdot\\int_a^b g^2", display: true }
+          ],
+          holes: ["f(\\xi)(b-a)", "\\le", "\\int_a^b f^2\\cdot\\int_a^b g^2"],
+          mask: [
+            "\\int_a^b f(x)\\,dx={{1}}",
+            "\\left(\\int_a^b fg\\right)^2{{2}}{{3}}"
+          ],
+          notes: [
+            "要求 f 在 [a,b] 上连续。",
+            "广义形式：∫f·g dx = f(ξ)∫g dx（g 不变号）。"
+          ]
         }
       ]
     },
@@ -899,6 +1008,26 @@ window.MATH2_DATA = {
             { tex: "y=C_{1}e^{x}+C_{2}e^{2x}" }
           ],
           answer: "y=C_{1}e^{x}+C_{2}e^{2x}"
+        },
+        {
+          id: "ode-reduce",
+          kind: "cloze",
+          freq: 3,
+          tier: 3,
+          title: "可降阶方程",
+          hint: "缺 y 直接设 p=y′；缺 x 把 p 当成 y 的函数。",
+          reveal: [
+            { tex: "y''=f(x,y'):\\ \\text{令 }p=y',\\ y''=p'", display: true },
+            { tex: "y''=f(y,y'):\\ \\text{令 }p=y',\\ y''=p\\frac{dp}{dy}", display: true }
+          ],
+          holes: ["p'", "p\\dfrac{dp}{dy}"],
+          mask: [
+            "y''=f(x,y'):\\ y''={{1}}",
+            "y''=f(y,y'):\\ y''={{2}}"
+          ],
+          notes: [
+            "降成一阶后按可分离或一阶线性处理。"
+          ]
         }
       ]
     },
@@ -1081,6 +1210,24 @@ window.MATH2_DATA = {
             { tex: "\\text{通解：}k(-1,1)^{T},\\ k\\in\\mathbb{R}" }
           ],
           answer: "\\xi=(-1,1)^{T}"
+        },
+        {
+          id: "linsys-cramer",
+          kind: "cloze",
+          freq: 2,
+          tier: 2,
+          title: "克拉默法则",
+          hint: "系数行列式不为零时，解可以写成行列式的比值。",
+          reveal: [
+            { tex: "D=|A|\\neq0\\Rightarrow x_j=\\frac{D_j}{D},\\quad D_j\\text{ 为把 }D\\text{ 的第 }j\\text{ 列换成 }b", display: true }
+          ],
+          holes: ["|A|\\neq0", "\\dfrac{D_j}{D}"],
+          mask: [
+            "{{1}}\\Rightarrow x_j={{2}}"
+          ],
+          notes: [
+            "D=0 时法则失效，回到秩的判定。"
+          ]
         }
       ]
     },
@@ -1205,12 +1352,40 @@ window.MATH2_DATA = {
             { tex: "\\text{两个单根，代数重数=几何重数，可对角化。}" }
           ],
           answer: "\\lambda=2,3\\text{（可对角化）}"
+        },
+        {
+          id: "eigen-abstract",
+          kind: "cloze",
+          freq: 3,
+          tier: 3,
+          title: "抽象矩阵的特征值",
+          hint: "A 的特征值是 λ，运算后的矩阵特征值跟着做同样运算。",
+          reveal: [
+            { tex: "f(A)\\text{ 的特征值}=f(\\lambda);\\quad A^{-1}:\\ \\frac1\\lambda;\\quad A^*:\\ \\frac{|A|}{\\lambda}", display: true }
+          ],
+          holes: ["f(\\lambda)", "\\dfrac1\\lambda", "\\dfrac{|A|}{\\lambda}"],
+          mask: [
+            "f(A)\\Rightarrow{{1}},\\quad A^{-1}\\Rightarrow{{2}},\\quad A^*\\Rightarrow{{3}}"
+          ],
+          notes: [
+            "特征向量不变，还是原来那个 ξ。",
+            "A* 的结论要求 λ≠0。"
+          ]
         }
       ]
     },
     {
-      id: "mschool",
+      id: "master",
       no: "十",
+      name: "公式全表",
+      blurb: "全部数二公式 · 按档位过一遍",
+      exam: "考前必过",
+      virtual: true,
+      cards: []
+    },
+    {
+      id: "mschool",
+      no: "十一",
       name: "中学锦囊",
       blurb: "地基公式 · 随用随查",
       exam: "全程在用",

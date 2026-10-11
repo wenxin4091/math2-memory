@@ -87,6 +87,28 @@
     return `<span class="freq-badge tier-${t || 0}">${label}★${f}</span>`;
   }
 
+  /* 聚合章（公式全表）：汇集全部考研模块卡片，不复制数据，进度共享 */
+  function masterPairs() {
+    const out = [];
+    for (const m of modules()) {
+      if (m.virtual || m.id === "mschool") continue;
+      for (const c of m.cards) out.push({ moduleId: m.id, card: c });
+    }
+    return out;
+  }
+  function pairsOf(m) {
+    return m.virtual ? masterPairs() : m.cards.map((c) => ({ moduleId: m.id, card: c }));
+  }
+  function cardsOf(m) {
+    return m.virtual ? masterPairs().map((p) => p.card) : m.cards;
+  }
+  function sortPairsByFreq(list) {
+    return list
+      .map((p, i) => ({ p, i }))
+      .sort((a, b) => freqOf(b.p.card) - freqOf(a.p.card) || a.i - b.i)
+      .map((x) => x.p);
+  }
+
   function loadProgress() {
     try {
       return JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
@@ -120,12 +142,13 @@
 
   function moduleStats(id) {
     const m = findModule(id);
-    const total = m.cards.length;
+    const pairs = pairsOf(m);
+    const total = pairs.length;
     let known = 0;
     let due = 0;
     const now = Date.now();
-    for (const c of m.cards) {
-      const s = getStat(id, c.id);
+    for (const p of pairs) {
+      const s = getStat(p.moduleId, p.card.id);
       if (s.seen && s.box === 2) known += 1;
       if (s.seen && s.due <= now) due += 1;
     }
@@ -293,10 +316,10 @@
     const m = findModule(state.moduleId);
     if (!m) return null;
     const kind = state.mode === "quiz" ? "example" : "cloze";
-    const list = sortByFreq(m.cards.filter((c) => c.kind === kind));
-    const card = list[state.idx];
-    if (!card) return null;
-    return { moduleId: m.id, card, total: list.length, list };
+    const sorted = sortPairsByFreq(pairsOf(m).filter((p) => p.card.kind === kind));
+    const item = sorted[state.idx];
+    if (!item) return null;
+    return { moduleId: item.moduleId, card: item.card, total: sorted.length };
   }
 
   function maxLevel(card) {
@@ -422,9 +445,10 @@
   }
 
   function renderSheet(m) {
-    const anyTier = m.cards.some((c) => tierOf(c));
-    if (!anyTier) return `<div class="panel">${m.cards.map(sheetCardHtml).join("")}</div>`;
-    const sorted = m.cards
+    const all = cardsOf(m);
+    const anyTier = all.some((c) => tierOf(c));
+    if (!anyTier) return `<div class="panel">${all.map(sheetCardHtml).join("")}</div>`;
+    const sorted = all
       .map((c, i) => ({ c, i }))
       .sort((a, b) => tierOf(a.c) - tierOf(b.c) || freqOf(b.c) - freqOf(a.c) || a.i - b.i)
       .map((x) => x.c);
